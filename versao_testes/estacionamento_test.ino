@@ -17,24 +17,32 @@ String teste1="", teste2="";
 
 void checkSensores() {
 
-  for (int i = 0; i < 10 ; i++){
+  for (int i = 0; i < 20 ; i++){
       for (int j = 0; j < 4; j++) {
         if (i ==0)
         {
           lastReading[j] =0;
         }
-        delay(7);
+        delay(30);
         lastReading[j] += analogRead(pinSensores[j]);
       }
   }
   for (int i = 0; i < 4; i++) {
-     lastReading[i] = lastReading[i] / 10;
+     lastReading[i] = lastReading[i] / 20;
      lastReading[i] = (lastReading[i]*5)/1023;
   }
 }
 
 void setup() {
   Serial.begin(9600);
+  delay(100);
+  checkSensores();
+  Serial.println("-----");
+  for(int i =0; i<4; i++){
+    ocioso[i] = lastReading[i];
+    Serial.println(ocioso[i]);
+  }
+  
   delay(200);
 
    lcd.clear();
@@ -55,19 +63,14 @@ delay(2000);
   servo_entrada.write(25); //TODO: Conferir se 0 graus é fechado.
   servo_saida.write(0);*/
   
-  checkSensores();
-  Serial.println("-----");
-  for(int i =0; i<4; i++){
-    ocioso[i] = lastReading[i];
-    Serial.println(ocioso[i]);
-  }
+
    Serial.println("-----");
    digitalWrite(pinLedVerde[2], HIGH);
    digitalWrite(pinLedVermelho[3], HIGH);
 }
 float temp;
 void loop() {
-  delay(5000);
+  delay(1000);
   checkSensores();
   Serial.println("-----");
   for(int i =0; i<4; i++){
