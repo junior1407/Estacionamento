@@ -3,7 +3,7 @@
 #define vaga_0_0 0
 #define vaga_0_1 1
 #define vaga_0_2 2
-#define vaga_0_3 3
+#define vaga_0_3 3s
 #define catraca_0 4
 #define catraca_1 5
 #define pinServo_0 2

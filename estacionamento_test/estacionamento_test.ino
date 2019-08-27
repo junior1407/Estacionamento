@@ -6,6 +6,8 @@
 Servo servo_entrada;
 Servo servo_saida;
 
+//LiquidCrystal lcd(<pino RS>, <pino enable>, <pino D4>, <pino D5>, <pino D6>, <pino D7>)
+LiquidCrystal lcd(12, 13, 14, 15, 16, 17);
 float lastReading[] = {0,0,0,0,0,0};
 int pinSensores[] = { A0, A1, A9, A2};
 float ocioso[] = {0, 0, 0, 0,0,0};
@@ -15,18 +17,18 @@ String teste1="", teste2="";
 
 void checkSensores() {
 
-  for (int i = 0; i < 20 ; i++){
+  for (int i = 0; i < 10 ; i++){
       for (int j = 0; j < 4; j++) {
         if (i ==0)
         {
           lastReading[j] =0;
         }
-        delay(10);
+        delay(7);
         lastReading[j] += analogRead(pinSensores[j]);
       }
   }
   for (int i = 0; i < 4; i++) {
-     lastReading[i] = lastReading[i] / 20;
+     lastReading[i] = lastReading[i] / 10;
      lastReading[i] = (lastReading[i]*5)/1023;
   }
 }
@@ -34,6 +36,9 @@ void checkSensores() {
 void setup() {
   Serial.begin(9600);
   delay(200);
+
+   lcd.clear();
+   lcd.print("oi");
   servo_entrada.attach(pinServo_0);
   servo_saida.attach(pinServo_1);
   for (int i = 0; i < 4; i++ ) {
@@ -68,7 +73,7 @@ void loop() {
   for(int i =0; i<4; i++){
     temp = abs(ocioso[i] - lastReading[i]);
     if (i<=1){
-      if (temp>0.2){
+      if (temp>0.1){
         digitalWrite(pinLedVerde[i], LOW);
         digitalWrite(pinLedVermelho[i], HIGH);
       }
@@ -85,9 +90,9 @@ void loop() {
              servo_entrada.write(25);
          }
          if ((i==3)&&(temp>0.2)){
-             servo_entrada.write(110);
+             servo_saida.write(95);
              delay(3000);
-             servo_entrada.write(25);
+             servo_saida.write(0);
          }
       
     }
