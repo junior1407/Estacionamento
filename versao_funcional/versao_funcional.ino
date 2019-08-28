@@ -35,7 +35,7 @@ void readSensores() {
       lastReading[j] += analogRead(pinSensores[j]);
     }
   }
-  for (int i = 0; i < 6; i++) {
+  for (int i = 0; i < 4; i++) {
     lastReading[i] = lastReading[i] / 10;
     lastReading[i] = (lastReading[i] * 5) / 1023; //Transformando escala em volts
   }
@@ -52,6 +52,7 @@ void processLeitura() {
     }
   }
 }
+
 void showVagas() {
   for (int i = 0 ; i < 4; i++) {
     if (stateVagas[i] == 1) {
@@ -94,12 +95,12 @@ void checkCatracas() {
       timer1 = true;
       stateCatracas[1] = 1;
       countTimer1 = millis();
-      servo_saida.write(95); //FECHADO
+      servo_saida.write(95); //ABERTA
       vagas++ ;
     }
   }
   else if (timer1 == true) {
-    Serial.println(millis() - countTimer1);
+    //Serial.println(millis() - countTimer1);
     if (millis() - countTimer1 >= 3000)
     {
       stateCatracas[1] = 0;
@@ -114,7 +115,6 @@ void checkCatracas() {
 void setup() {
   Serial.begin(9600);
   delay(200);
-
 
   lcd.begin(16, 2);
   lcd.clear();
